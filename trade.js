@@ -7,10 +7,6 @@ const tdy_low = document.getElementById("tdy_low");
 const niftyFtrs = document.getElementById("niftyFtrs");
 const BankniftyFtrs = document.getElementById("BankniftyFtrs");
 
-// Variables to store results
-let buyEntry, buyTarget, buyStoploss1, buyStoploss2;
-let sellEntry, sellTarget, sellStoploss1, sellStoploss2;
-
 function calc() {
     // Parse the input values
     const prehigh = parseFloat(pre_high.value);
@@ -28,57 +24,40 @@ function calc() {
     const twoDHH = Math.max(prehigh, tdyhigh);
     const twoDLL = Math.min(prelow, tdylow);
 
-    if (niftyFtrs.checked) {
-        // Nifty Futures calculations
-        const title = "NIFTY FUTURES";
-
-        buyEntry = twoDHH * (1 + 0.00125); // Buy entry
-        buyTarget = buyEntry * (1 + 0.0125); // Buy target
-        buyStoploss1 = Math.max(buyEntry * (1 - 0.0125), twoDLL * (1 - 0.00125)); // Buy stoploss1
-        buyStoploss2 = Math.max(buyEntry, twoDLL * (1 - 0.00125)); // Buy stoploss2
-
-        // Sell calculations
-        sellEntry = twoDLL * (1 - 0.00125); // Sell entry
-        sellTarget = sellEntry * (1 - 0.0125); // Sell target
-        sellStoploss1 = Math.min(sellEntry * (1 + 0.0125), twoDHH * (1 + 0.00125)); // Sell stoploss1
-        sellStoploss2 = Math.min(sellEntry, twoDHH * (1 + 0.00125)); // Sell stoploss2
-
-        // Store Nifty values in localStorage
-        localStorage.setItem('title', title);
-        localStorage.setItem('buyEntry', buyEntry.toFixed(1));
-        localStorage.setItem('buyTarget', buyTarget.toFixed(1));
-        localStorage.setItem('buyStoploss1', buyStoploss1.toFixed(1));
-        localStorage.setItem('buyStoploss2', buyStoploss2.toFixed(1));
-        localStorage.setItem('sellEntry', sellEntry.toFixed(1));
-        localStorage.setItem('sellTarget', sellTarget.toFixed(1));
-        localStorage.setItem('sellStoploss1', sellStoploss1.toFixed(1));
-        localStorage.setItem('sellStoploss2', sellStoploss2.toFixed(1));
-
-    } else if (BankniftyFtrs.checked) {
-        // Bank Nifty calculations
+    if (BankniftyFtrs.checked) {
         const title = "BANK-NIFTY FUTURES";
 
-        buyEntry = twoDHH * (1 + 0.0015); // Buy entry
-        buyTarget = buyEntry * (1 + 0.015); // Buy target
-        buyStoploss1 = Math.max(buyEntry * (1 - 0.015), twoDLL * (1 - 0.0015)); // Buy stoploss1
-        buyStoploss2 = Math.max(buyEntry, twoDLL * (1 - 0.0015)); // Buy stoploss2
-
-        // Sell calculations with corrected formulas
-        sellEntry = twoDLL * (1 - 0.0015); // Sell entry
-        sellTarget = sellEntry * (1 - 0.015); // Sell target
-        sellStoploss1 = Math.min(sellEntry * (1 + 0.015), twoDHH * (1 + 0.0015)); // Sell stoploss1 for Bank Nifty
-        sellStoploss2 = Math.min(sellEntry, twoDHH * (1 + 0.0015)); // Sell stoploss2 for Bank Nifty
+        // Bank Nifty Sell Calculations
+        const sellEntry = twoDLL * (1 - 0.0015); // Sell entry = Low - 0.15%
+        const sellStoploss1 = Math.min(sellEntry * (1 + 0.015), twoDHH * (1 + 0.0015)); // Correct Stoploss 1
+        const sellStoploss2 = Math.min(sellEntry, twoDHH * (1 + 0.0015)); // Correct Stoploss 2
 
         // Store Bank Nifty values in localStorage
         localStorage.setItem('title', title);
-        localStorage.setItem('buyEntry', buyEntry.toFixed(1));
-        localStorage.setItem('buyTarget', buyTarget.toFixed(1));
-        localStorage.setItem('buyStoploss1', buyStoploss1.toFixed(1));
-        localStorage.setItem('buyStoploss2', buyStoploss2.toFixed(1));
         localStorage.setItem('sellEntry', sellEntry.toFixed(1));
-        localStorage.setItem('sellTarget', sellTarget.toFixed(1));
         localStorage.setItem('sellStoploss1', sellStoploss1.toFixed(1));
         localStorage.setItem('sellStoploss2', sellStoploss2.toFixed(1));
+
+        console.log("Sell Entry:", sellEntry);
+        console.log("Sell Stoploss 1:", sellStoploss1);
+        console.log("Sell Stoploss 2:", sellStoploss2);
+    } else if (niftyFtrs.checked) {
+        const title = "NIFTY FUTURES";
+
+        // Nifty Sell Calculations
+        const sellEntry = twoDLL * (1 - 0.00125); // Sell entry = Low - 0.125%
+        const sellStoploss1 = Math.min(sellEntry * (1 + 0.0125), twoDHH * (1 + 0.00125)); // Correct Stoploss 1
+        const sellStoploss2 = Math.min(sellEntry, twoDHH * (1 + 0.00125)); // Correct Stoploss 2
+
+        // Store Nifty values in localStorage
+        localStorage.setItem('title', title);
+        localStorage.setItem('sellEntry', sellEntry.toFixed(1));
+        localStorage.setItem('sellStoploss1', sellStoploss1.toFixed(1));
+        localStorage.setItem('sellStoploss2', sellStoploss2.toFixed(1));
+
+        console.log("Sell Entry:", sellEntry);
+        console.log("Sell Stoploss 1:", sellStoploss1);
+        console.log("Sell Stoploss 2:", sellStoploss2);
     } else {
         alert('Please select an option.');
         return;

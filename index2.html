@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Targets</title>
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+    <div>
+        <h1 id="title"></h1>
+        <hr>
+        
+        <h2 id="buy">Buy Option</h2>
+        <label for="buyEntry">Buy-Entry:</label>
+        <p id="buyEntry">entry</p>
+        <label for="buyTarget">Buy-Target:</label>
+        <p id="buyTarget"></p>
+        <label for="buystoploss1">Buy-Stoploss1:</label>
+        <p id="buystoploss1"></p>
+        <label for="buystoploss2">Buy-Stoploss2:</label>
+        <p id="buystoploss2"></p>
+        <hr>
+
+        <h2 id="sell">Sell Option</h2>
+        <label for="sellEntry">Sell-Entry:</label>
+        <p id="sellEntry"></p>
+        <label for="sellTarget">Sell-Target:</label>
+        <p id="sellTarget"></p>
+        <label for="sellstoploss1">Sell-Stoploss1:</label>
+        <p id="sellstoploss1"></p>
+        <label for="sellstoploss2">Sell-Stoploss2:</label>
+        <p id="sellstoploss2"></p>
+        <hr>
+    </div>
+
+    <script>
+        // On page load, retrieve the data from localStorage and display it
+        window.onload = function() {
+            document.getElementById('title').textContent = localStorage.getItem('title') || "N/A";
+            
+            // Buy values
+            document.getElementById('buyEntry').textContent = localStorage.getItem('buyEntry') || "N/A";
+            document.getElementById('buyTarget').textContent = localStorage.getItem('buyTarget') || "N/A";
+            document.getElementById('buystoploss1').textContent = localStorage.getItem('buyStoploss1') || "N/A";
+            document.getElementById('buystoploss2').textContent = localStorage.getItem('buyStoploss2') || "N/A";
+            
+            // Sell values
+            document.getElementById('sellEntry').textContent = localStorage.getItem('sellEntry') || "N/A";
+            document.getElementById('sellTarget').textContent = localStorage.getItem('sellTarget') || "N/A";
+            document.getElementById('sellstoploss1').textContent = localStorage.getItem('sellstoploss1') || "N/A";
+            document.getElementById('sellstoploss2').textContent = localStorage.getItem('sellstoploss2') || "N/A";
+        }
+    </script>
+</body>
+</html>
